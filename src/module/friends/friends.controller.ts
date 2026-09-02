@@ -3,95 +3,92 @@ import { SuccessResponse } from "../../common/exceptions/success.responce";
 import { auth, userRequest } from "../../middleware/auth.middleware";
 import { asyncHandler } from "../../middleware/errorHanling";
 import { Validation } from "../../common/service/validation";
-import { uploadFile } from "../../common/utils/multer";
-import { MulterStorageEnum } from "../../common/enums/multer.enum";
-import { postsService } from "./posts.service";
+import { friendsService } from "./friends.service";
 import {
-  createPostSchema,
-  postParamsSchema,
-  updatePostSchema,
-} from "./posts.validation";
+  friendRequestParamsSchema,
+  sendFriendRequestSchema,
+} from "./friends.validation";
 
 const router: Router = Router();
 
 router.post(
-  "/",
+  "/send",
   auth,
-  uploadFile(MulterStorageEnum.diskStorage).single("file"),
-  Validation(createPostSchema),
+  Validation(sendFriendRequestSchema),
   asyncHandler(async (req: Request, res: Response) => {
-    const data = await postsService.createPost(
+    const data = await friendsService.sendFriendRequest(
       (req as userRequest).user.id,
-      req.body,
-      req.file as Express.Multer.File
+      req.body
     );
     return SuccessResponse({
       res,
-      message: "post created",
+      message: "friend request sent",
       status: 201,
       data,
     });
   })
 );
 
-router.get(
-  "/",
-  asyncHandler(async (req: Request, res: Response) => {
-    const data = await postsService.getAllPosts();
-    return SuccessResponse({
-      res,
-      message: "posts data",
-      status: 200,
-      data,
-    });
-  })
-);
-
-router.get(
-  "/:id",
-  Validation(postParamsSchema),
-  asyncHandler(async (req: Request, res: Response) => {
-    const data = await postsService.getPostById(req.params.id as string);
-    return SuccessResponse({
-      res,
-      message: "post data",
-      status: 200,
-      data,
-    });
-  })
-);
-
-router.put(
-  "/:id",
+router.post(
+  "/accept/:id",
   auth,
-  Validation(updatePostSchema),
+  Validation(friendRequestParamsSchema),
   asyncHandler(async (req: Request, res: Response) => {
-    const data = await postsService.updatePost(
-      (req as userRequest).user.id,
-      req.params.id as string,
-      req.body
-    );
-    return SuccessResponse({
-      res,
-      message: "post updated",
-      status: 200,
-      data,
-    });
-  })
-);
-
-router.delete(
-  "/:id",
-  auth,
-  Validation(postParamsSchema),
-  asyncHandler(async (req: Request, res: Response) => {
-    const data = await postsService.deletePost(
+    const data = await friendsService.acceptFriendRequest(
       (req as userRequest).user.id,
       req.params.id as string
     );
     return SuccessResponse({
       res,
-      message: "post deleted",
+      message: "friend request accepted",
+      status: 200,
+      data,
+    });
+  })
+);
+
+router.post(
+  "/reject/:id",
+  auth,
+  Validation(friendRequestParamsSchema),
+  asyncHandler(async (req: Request, res: Response) => {
+    const data = await friendsService.rejectFriendRequest(
+      (req as userRequest).user.id,
+      req.params.id as string
+    );
+    return SuccessResponse({
+      res,
+      message: "friend request rejected",
+      status: 200,
+      data,
+    });
+  })
+);
+
+router.get(
+  "/",
+  auth,
+  asyncHandler(async (req: Request, res: Response) => {
+    const data = await friendsService.getFriends((req as userRequest).user.id);
+    return SuccessResponse({
+      res,
+      message: "friends data",
+      status: 200,
+      data,
+    });
+  })
+);
+
+router.get(
+  "/requests",
+  auth,
+  asyncHandler(async (req: Request, res: Response) => {
+    const data = await friendsService.getPendingRequests(
+      (req as userRequest).user.id
+    );
+    return SuccessResponse({
+      res,
+      message: "pending friend requests",
       status: 200,
       data,
     });

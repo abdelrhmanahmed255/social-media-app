@@ -104,7 +104,7 @@ export class AuthService {
 
     const user = await this.userRepository.findOne({
       filter: { email },
-      select: "+password email userName role phone profileImage",
+      select: "password email userName role phone profileImage",
       lean: false,
     });
 
