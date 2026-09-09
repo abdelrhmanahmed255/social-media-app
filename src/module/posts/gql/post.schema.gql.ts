@@ -1,4 +1,4 @@
-import { postGQLType, postListGQLType } from "./post.type.gql";
+import { onePostType, getAllPostsType } from "./post.type.gql";
 import {
   createPostGQLArgs,
   postIdGQLArgs,
@@ -6,38 +6,39 @@ import {
   deletePostGQLArgs,
 } from "./post.args.gql";
 import { postResolver } from "./post.resolver.gql";
+import { GQLObjectFields } from "../../gql/types.gql";
 
 export class PostGQLSchema {
   constructor() {}
 
-  registerQuery() {
+  registerQuery(): GQLObjectFields {
     return {
       getPosts: {
-        type: postListGQLType,
+        type: getAllPostsType,
         resolve: postResolver.getAllPosts,
       },
       getPost: {
-        type: postGQLType,
+        type: onePostType,
         args: postIdGQLArgs,
         resolve: postResolver.getPostById,
       },
     };
   }
 
-  registerMutation() {
+  registerMutation(): GQLObjectFields {
     return {
       createPost: {
-        type: postGQLType,
+        type: onePostType,
         args: createPostGQLArgs,
         resolve: postResolver.createPost,
       },
       updatePost: {
-        type: postGQLType,
+        type: onePostType,
         args: updatePostGQLArgs,
         resolve: postResolver.updatePost,
       },
       deletePost: {
-        type: postGQLType,
+        type: onePostType,
         args: deletePostGQLArgs,
         resolve: postResolver.deletePost,
       },

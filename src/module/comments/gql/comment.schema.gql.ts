@@ -1,33 +1,34 @@
-import { commentGQLType, commentListGQLType } from "./comment.type.gql";
+import { oneCommentType, getAllCommentsType } from "./comment.type.gql";
 import {
   createCommentGQLArgs,
   commentIdGQLArgs,
   postCommentsGQLArgs,
 } from "./comment.args.gql";
 import { commentResolver } from "./comment.resolver.gql";
+import { GQLObjectFields } from "../../gql/types.gql";
 
 export class CommentGQLSchema {
   constructor() {}
 
-  registerQuery() {
+  registerQuery(): GQLObjectFields {
     return {
       getComments: {
-        type: commentListGQLType,
+        type: getAllCommentsType,
         args: postCommentsGQLArgs,
         resolve: commentResolver.getCommentsByPost,
       },
     };
   }
 
-  registerMutation() {
+  registerMutation(): GQLObjectFields {
     return {
       createComment: {
-        type: commentGQLType,
+        type: oneCommentType,
         args: createCommentGQLArgs,
         resolve: commentResolver.createComment,
       },
       deleteComment: {
-        type: commentGQLType,
+        type: oneCommentType,
         args: commentIdGQLArgs,
         resolve: commentResolver.deleteComment,
       },

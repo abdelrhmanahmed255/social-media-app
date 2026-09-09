@@ -1,15 +1,15 @@
-import { GraphQLString } from "graphql";
+import { GQLArgsMap, GQLRequiredString } from "../../gql/types.gql";
 
-export const sendFriendRequestGQLArgs = {
-  fromUserId: { type: GraphQLString },
-  toUserId: { type: GraphQLString },
+export const sendFriendRequestGQLArgs: GQLArgsMap = {
+  fromUserId: { type: GQLRequiredString },
+  toUserId: { type: GQLRequiredString },
 };
 
-export const friendRequestGQLArgs = {
-  userId: { type: GraphQLString },
-  requestId: { type: GraphQLString },
+export const friendRequestGQLArgs: GQLArgsMap = {
+  userId: { type: GQLRequiredString },
+  requestId: { type: GQLRequiredString },
 };
 
-export const userIdGQLArgs = {
-  userId: { type: GraphQLString },
+export const userIdGQLArgs: GQLArgsMap = {
+  userId: { type: GQLRequiredString },
 };

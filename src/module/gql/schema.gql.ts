@@ -4,6 +4,7 @@ import { postGQLSchema } from "../posts/gql/post.schema.gql";
 import { commentGQLSchema } from "../comments/gql/comment.schema.gql";
 import { friendGQLSchema } from "../friends/gql/friend.schema.gql";
 
+
 export const query = new GraphQLObjectType({
   name: "RootQuery",
   fields: {
@@ -11,6 +12,7 @@ export const query = new GraphQLObjectType({
     ...postGQLSchema.registerQuery(),
     ...commentGQLSchema.registerQuery(),
     ...friendGQLSchema.registerQuery(),
+
   },
 });
 

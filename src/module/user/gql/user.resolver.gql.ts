@@ -1,11 +1,13 @@
 class UserResolver {
   constructor() {}
 
-  helloWorld(parent: any, args: any) {
-    console.log(args);
-    const { name, email, password } = args;
+  userProfile(
+    parent: unknown,
+    args: { userName: string; email: string; password: string }
+  ) {
+    const { userName, email } = args;
     return {
-      message: `my name is ${name} and my email is ${email} and my password is ${password}`,
+      message: `userName is ${userName} and email is ${email}`,
     };
   }
 }

@@ -3,16 +3,18 @@ import { friendsService } from "../friends.service";
 class FriendResolver {
   constructor() {}
 
-  async getFriends(_parent: any, args: { userId: string }) {
-    return friendsService.getFriends(args.userId);
+  async getFriends(parent: any, args: { userId: string }) {
+    const friends = await friendsService.getFriends(args.userId);
+    return { message: friends };
   }
 
-  async getPendingRequests(_parent: any, args: { userId: string }) {
-    return friendsService.getPendingRequests(args.userId);
+  async getPendingRequests(parent: any, args: { userId: string }) {
+    const requests = await friendsService.getPendingRequests(args.userId);
+    return { message: requests };
   }
 
   async sendFriendRequest(
-    _parent: any,
+    parent: any,
     args: { fromUserId: string; toUserId: string }
   ) {
     return friendsService.sendFriendRequest(args.fromUserId, {
@@ -21,14 +23,14 @@ class FriendResolver {
   }
 
   async acceptFriendRequest(
-    _parent: any,
+    parent: any,
     args: { userId: string; requestId: string }
   ) {
     return friendsService.acceptFriendRequest(args.userId, args.requestId);
   }
 
   async rejectFriendRequest(
-    _parent: any,
+    parent: any,
     args: { userId: string; requestId: string }
   ) {
     return friendsService.rejectFriendRequest(args.userId, args.requestId);

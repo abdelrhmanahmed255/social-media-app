@@ -3,12 +3,13 @@ import { commentsService } from "../comments.service";
 class CommentResolver {
   constructor() {}
 
-  async getCommentsByPost(_parent: any, args: { postId: string }) {
-    return commentsService.getCommentsByPost(args.postId);
+  async getCommentsByPost(parent: any, args: { postId: string }) {
+    const comments = await commentsService.getCommentsByPost(args.postId);
+    return { message: comments };
   }
 
   async createComment(
-    _parent: any,
+    parent: any,
     args: { userId: string; postId: string; content: string }
   ) {
     return commentsService.createComment(args.userId, {
@@ -17,7 +18,7 @@ class CommentResolver {
     });
   }
 
-  async deleteComment(_parent: any, args: { userId: string; id: string }) {
+  async deleteComment(parent: any, args: { userId: string; id: string }) {
     return commentsService.deleteComment(args.userId, args.id);
   }
 }

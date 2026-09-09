@@ -1,7 +1,7 @@
-import { GraphQLString } from "graphql";
+import { GQLArgsMap, GQLRequiredString } from "../../gql/types.gql";
 
-export const helloWorldGQLArgs = {
-  name: { type: GraphQLString },
-  email: { type: GraphQLString },
-  password: { type: GraphQLString },
+export const userProfileGQLArgs: GQLArgsMap = {
+  userName: { type: GQLRequiredString },
+  email: { type: GQLRequiredString },
+  password: { type: GQLRequiredString },
 };

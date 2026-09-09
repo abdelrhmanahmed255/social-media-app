@@ -4,19 +4,25 @@ class PostResolver {
   constructor() {}
 
   async getAllPosts() {
-    return postsService.getAllPosts();
+    const posts = await postsService.getAllPosts();
+    return { message: posts };
   }
 
-  async getPostById(_parent: any, args: { id: string }) {
+  async getPostById(parent: any, args: { id: string }) {
     return postsService.getPostById(args.id);
   }
 
-  async createPost(_parent: any, args: { userId: string; content: string }) {
+ 
+  getAuthor(parent: any) {
+    return parent.userId;
+  }
+
+  async createPost(parent: any, args: { userId: string; content: string }) {
     return postsService.createPost(args.userId, { content: args.content });
   }
 
   async updatePost(
-    _parent: any,
+    parent: any,
     args: { userId: string; id: string; content: string }
   ) {
     return postsService.updatePost(args.userId, args.id, {
@@ -24,7 +30,7 @@ class PostResolver {
     });
   }
 
-  async deletePost(_parent: any, args: { userId: string; id: string }) {
+  async deletePost(parent: any, args: { userId: string; id: string }) {
     return postsService.deletePost(args.userId, args.id);
   }
 }

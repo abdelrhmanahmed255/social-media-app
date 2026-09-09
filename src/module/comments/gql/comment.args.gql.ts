@@ -1,16 +1,16 @@
-import { GraphQLString } from "graphql";
+import { GQLArgsMap, GQLRequiredString } from "../../gql/types.gql";
 
-export const createCommentGQLArgs = {
-  userId: { type: GraphQLString },
-  postId: { type: GraphQLString },
-  content: { type: GraphQLString },
+export const createCommentGQLArgs: GQLArgsMap = {
+  userId: { type: GQLRequiredString },
+  postId: { type: GQLRequiredString },
+  content: { type: GQLRequiredString },
 };
 
-export const commentIdGQLArgs = {
-  userId: { type: GraphQLString },
-  id: { type: GraphQLString },
+export const commentIdGQLArgs: GQLArgsMap = {
+  userId: { type: GQLRequiredString },
+  id: { type: GQLRequiredString },
 };
 
-export const postCommentsGQLArgs = {
-  postId: { type: GraphQLString },
+export const postCommentsGQLArgs: GQLArgsMap = {
+  postId: { type: GQLRequiredString },
 };

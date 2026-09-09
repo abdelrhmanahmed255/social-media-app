@@ -1,17 +1,18 @@
 import { GraphQLString } from "graphql";
-import { helloWorldGQLType } from "./user.type.gql";
-import { helloWorldGQLArgs } from "./user.args.gql";
+import { userProfileGQLType } from "./user.type.gql";
+import { userProfileGQLArgs } from "./user.args.gql";
 import { userResolver } from "./user.resolver.gql";
+import { GQLObjectFields } from "../../gql/types.gql";
 
 export class UserGQLSchema {
   constructor() {}
 
-  registerQuery() {
+  registerQuery(): GQLObjectFields {
     return {
-      helloworld: {
-        type: helloWorldGQLType,
-        args: helloWorldGQLArgs,
-        resolve: userResolver.helloWorld,
+      userProfile: {
+        type: userProfileGQLType,
+        args: userProfileGQLArgs,
+        resolve: userResolver.userProfile,
       },
       test: {
         type: GraphQLString,

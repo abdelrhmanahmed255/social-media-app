@@ -1,43 +1,44 @@
-import { friendGQLType, friendListGQLType } from "./friend.type.gql";
+import { oneFriendType, getAllFriendsType } from "./friend.type.gql";
 import {
   sendFriendRequestGQLArgs,
   friendRequestGQLArgs,
   userIdGQLArgs,
 } from "./friend.args.gql";
 import { friendResolver } from "./friend.resolver.gql";
+import { GQLObjectFields } from "../../gql/types.gql";
 
 export class FriendGQLSchema {
   constructor() {}
 
-  registerQuery() {
+  registerQuery(): GQLObjectFields {
     return {
       getFriends: {
-        type: friendListGQLType,
+        type: getAllFriendsType,
         args: userIdGQLArgs,
         resolve: friendResolver.getFriends,
       },
       getPendingRequests: {
-        type: friendListGQLType,
+        type: getAllFriendsType,
         args: userIdGQLArgs,
         resolve: friendResolver.getPendingRequests,
       },
     };
   }
 
-  registerMutation() {
+  registerMutation(): GQLObjectFields {
     return {
       sendFriendRequest: {
-        type: friendGQLType,
+        type: oneFriendType,
         args: sendFriendRequestGQLArgs,
         resolve: friendResolver.sendFriendRequest,
       },
       acceptFriendRequest: {
-        type: friendGQLType,
+        type: oneFriendType,
         args: friendRequestGQLArgs,
         resolve: friendResolver.acceptFriendRequest,
       },
       rejectFriendRequest: {
-        type: friendGQLType,
+        type: oneFriendType,
         args: friendRequestGQLArgs,
         resolve: friendResolver.rejectFriendRequest,
       },

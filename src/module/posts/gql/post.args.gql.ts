@@ -1,21 +1,21 @@
-import { GraphQLString } from "graphql";
+import { GQLArgsMap, GQLRequiredString } from "../../gql/types.gql";
 
-export const createPostGQLArgs = {
-  userId: { type: GraphQLString },
-  content: { type: GraphQLString },
+export const createPostGQLArgs: GQLArgsMap = {
+  userId: { type: GQLRequiredString },
+  content: { type: GQLRequiredString },
 };
 
-export const postIdGQLArgs = {
-  id: { type: GraphQLString },
+export const postIdGQLArgs: GQLArgsMap = {
+  id: { type: GQLRequiredString },
 };
 
-export const updatePostGQLArgs = {
-  userId: { type: GraphQLString },
-  id: { type: GraphQLString },
-  content: { type: GraphQLString },
+export const updatePostGQLArgs: GQLArgsMap = {
+  userId: { type: GQLRequiredString },
+  id: { type: GQLRequiredString },
+  content: { type: GQLRequiredString },
 };
 
-export const deletePostGQLArgs = {
-  userId: { type: GraphQLString },
-  id: { type: GraphQLString },
+export const deletePostGQLArgs: GQLArgsMap = {
+  userId: { type: GQLRequiredString },
+  id: { type: GQLRequiredString },
 };
